@@ -39,6 +39,27 @@ class Client {
 	}
 
 	/**
+	* Get a player's Skyblock profile data.
+	* @param {string} [targetType=profile] - Target type. 'profile'
+	* @param {string} identifier - Identifier for the target. (Either a name or UUID, based on targetType.)
+	*/
+	async getSkyBlockProfileData(p1, p2) {
+		let targetUUID = await getUUIDFromTarget(p1, p2)
+
+		const res = await c(baseURL).path('/skyblock/profile').query({
+			'key': this.key, 
+			'profile': this.profile
+		}).send()
+
+		const parsed = await res.json()
+
+		if (parsed.success) {
+			return parsed
+		}
+		else throw new Error(parsed.cause || response)
+	}
+
+	/**
 	* Get a session's data.
 	* @param {string} [targetType=uuid] - Target type. 'name' or 'uuid'
 	* @param {string} identifier - Identifier for the target. (Either a name or UUID, based on targetType.)
