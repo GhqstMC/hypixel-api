@@ -40,7 +40,7 @@ class Client {
 
 	/**
 	* List a player's Skyblock profiles.
-	* @param {string} [targetType=uuid] - Target type. 'name' or 'uuid'
+	* @param {string} targetType - Target type. 'name' or 'uuid'
 	* @param {string} identifier - Identifier for the target. (Either a name or UUID, based on targetType.)
 	*/
 	async getSkyblockProfiles(p1, p2) {
@@ -78,7 +78,7 @@ class Client {
 	
 	/**
 	 * 
-	 * @param {string} [targetType=uuid] - Target type. 'name' or 'uuid'. Target is player who created the auction.
+	 * @param {string} targetType - Target type. 'name' or 'uuid'. Target is player who created the auction.
 	 * @param {string} identifier - Identifier for the target. (Either a name or UUID, based on targetType.)
 	 * @param {string} profileID Skyblock profile ID
 	 */
@@ -154,7 +154,7 @@ class Client {
 	/**
 	 * Note from the official API Documentation: This method is deprecated and will be removed at a later date. 
 	 * Get data for a Skyblock Bazaar item
-	 * @param {string} ID of the item
+	 * @param {string} itemID ID of the item
 	 */
 	async getSkyblockBazaarItem(itemID){
 		const res = await c(baseURL).path('/skyblock/bazaar/product').query({

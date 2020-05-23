@@ -1,11 +1,11 @@
 {
   "name": "hypixel-api",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A light Hypixel Public API client for Node",
   "main": "model/Client.js",
   "scripts": {
     "test": "echo \"No test has been built yet.\"",
-    "gendoc": "rm -r docs || true && jsdoc -R README.md -d ./docs model/Client.js"
+    "gendoc": "rm -r docs || true && npx jsdoc -R README.md -d ./docs model/Client.js"
   },
   "repository": {
     "type": "git",
