@@ -39,16 +39,33 @@ class Client {
 	}
 
 	/**
-	* Get a player's Skyblock profile data.
-	* @param {string} [targetType=profile] - Target type. 'profile'
+	* List a player's Skyblock profiles.
+	* @param {string} [targetType=uuid] - Target type. 'name' or 'uuid'
 	* @param {string} identifier - Identifier for the target. (Either a name or UUID, based on targetType.)
 	*/
-	async getSkyBlockProfileData(p1, p2) {
+	async getSkyblockProfiles(p1, p2) {
 		let targetUUID = await getUUIDFromTarget(p1, p2)
 
+		const res = await c(baseURL).path('skyblock/profiles').query({
+			'key': this.key,
+			'uuid': targetUUID
+		}).send()
+
+		const parsed = await res.json()
+
+		if (parsed.success) {
+			return parsed
+		}
+	}
+
+	/**
+	* Get data for a Skyblock profile.
+	* @param {string} [profileID] Skyblock profile ID
+	*/
+	async getSkyblockProfileData(profileID) {
 		const res = await c(baseURL).path('/skyblock/profile').query({
 			'key': this.key, 
-			'profile': this.profile
+			'profile': profileID
 		}).send()
 
 		const parsed = await res.json()
@@ -57,6 +74,117 @@ class Client {
 			return parsed
 		}
 		else throw new Error(parsed.cause || response)
+	}
+	
+	/**
+	 * 
+	 * @param {string} [targetType=uuid] - Target type. 'name' or 'uuid'. Target is player who created the auction.
+	 * @param {string} identifier - Identifier for the target. (Either a name or UUID, based on targetType.)
+	 * @param {string} profileID Skyblock profile ID
+	 */
+	async getSkyblockPlayerAuction(p1, p2, profileID) {
+		let targetUUID = await getUUIDFromTarget(p1, p2)
+
+		const res = await c(baseURL).path('/skyblock/auction').query({
+			'key': this.key,
+			'uuid': targetUUID,
+			'profile': profileID
+		}).send()
+
+		const parsed = await res.json()
+
+		if (parsed.success) {
+			return parsed
+		}
+		else throw new Error(parsed.cause || response)
+	}
+	
+	/**
+	 * 
+	 * @param {int} [auctionPage=0] Auction page number
+	 */
+	async getSkyblockAuctions(auctionPage = 0) {
+		const res = await c(baseURL).path('/skyblock/auctions').query({
+			'key': this.key,
+			'page': auctionPage	
+		}).send()
+
+		const parsed = await res.json()
+
+		if (parsed.success) {
+			return parsed
+		}
+		else throw new Error(parsed.cause || response)
+	}
+
+	/**
+	 * Get the current Bazaar data
+	 */
+	async getSkyblockBazaar() {
+		const res = await c(baseURL).path('/skyblock/bazaar').query({
+			'key': this.key
+		}).send()
+	
+		const parsed = await res.json()
+	
+		if (parsed.success) {
+			return parsed
+		}
+		else throw new Error(parsed.cause || response)
+	}
+
+	/**
+	 * List Skyblock Bazaar items
+	 * Note from the official API documentation: This method is deprecated and will be removed at a later date.
+	 * List all Bazaar items
+	 */
+	async getAllSkyblockBazaarItems(){
+		const res = await c(baseURL).path('skyblock/bazaar/products').query({
+			'key': this.key
+		}).send()
+
+		const parsed = await res.json()
+
+		if (parsed.success) {
+			return parsed
+		}
+		else throw new Error(parsed.cause || response)
+	}
+
+	/**
+	 * Note from the official API Documentation: This method is deprecated and will be removed at a later date. 
+	 * Get data for a Skyblock Bazaar item
+	 * @param {string} ID of the item
+	 */
+	async getSkyblockBazaarItem(itemID){
+		const res = await c(baseURL).path('/skyblock/bazaar/product').query({
+			'key': this.key,
+			'productId': itemID
+		}).send()
+
+		const parsed = await res.json()
+
+		if (parsed.success) {
+			return parsed
+		}
+		else throw new Error(parsed.cause || response)
+	}
+
+	/**
+	 * Get the current Skyblock News including a title, description and a thread.
+	 */
+	async getSkyblockNews() {
+		const res = await c(baseURL).path('skyblock/news').query({
+			'key': this.key
+		}).send()
+		
+		const parsed = await res.json()
+	
+		if (parsed.success) {
+			return parsed
+		}
+		else throw new Error(parsed.cause || response)
+	
 	}
 
 	/**
