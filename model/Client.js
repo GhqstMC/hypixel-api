@@ -195,7 +195,7 @@ class Client {
 	async getSession(p1, p2) {
 		let targetUUID = await getUUIDFromTarget(p1, p2)
 
-		const res = await c(baseURL).path('/session').query({
+		const res = await c(baseURL).path('/status').query({
 			'uuid': targetUUID,
 			'key': this.key
 		}).send()
