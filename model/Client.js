@@ -1,7 +1,7 @@
 const path = require('path')
 const c = require('centra')
 
-const getUUIDFromTarget = require('../utilities/uuidTarget')
+const getUUIDFromTarget = require('../utility/uuidTarget')
 
 const baseURL = 'https://api.hypixel.net/'
 
