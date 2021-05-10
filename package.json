@@ -1,5 +1,5 @@
 {
-  "name": "hypixel-api",
+  "name": "tweaked-hypixel-api",
   "version": "1.2.0",
   "description": "A light Hypixel Public API client for Node",
   "main": "model/Client.js",
