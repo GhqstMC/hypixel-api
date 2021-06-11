@@ -7,21 +7,19 @@ module.exports = async (p1, p2) => {
 	let targetUUID = (targetType === 'uuid' ? identifier : null)
 
 	if (targetType === 'name') {
-		let playerResolution = await c('https://api.mojang.com/profiles/minecraft', 'POST').body([identifier]).send()
+		let playerResolution = await c('https://playerdb.co/api/player/minecraft/' + identifier, 'GET').send()
 
 		if (playerResolution.statusCode === 200) {
 			let body
 			try {
 				body = JSON.parse(playerResolution.body)
-
-				if (!Array.isArray(body)) throw 'Not array'
 			}
 			catch (err) {
 				throw new Error('Invalid response recieved from Mojang UUID resolution endpoint.')
 			}
 
-			if (body.length > 0) {
-				targetUUID = body[0].id
+			if (body.success) {
+				targetUUID = body.data.player.id
 			}
 			else {
 				throw new Error('Player does not exist.')
